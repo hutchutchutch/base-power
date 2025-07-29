@@ -48,6 +48,8 @@ export class MemStorage implements IStorage {
     const session: PhotoSession = { 
       ...insertSession, 
       id,
+      userId: insertSession.userId || null,
+      currentStep: insertSession.currentStep || null,
       createdAt: now,
       updatedAt: now,
       completedSteps: insertSession.completedSteps || []
@@ -78,6 +80,8 @@ export class MemStorage implements IStorage {
     const attempt: PhotoAttempt = { 
       ...insertAttempt, 
       id,
+      verificationResult: insertAttempt.verificationResult || null,
+      errorMessage: insertAttempt.errorMessage || null,
       createdAt: new Date()
     };
     this.photoAttempts.set(id, attempt);

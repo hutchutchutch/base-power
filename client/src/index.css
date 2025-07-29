@@ -97,15 +97,15 @@
 }
 
 .typeform-button-primary {
-  @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  @apply bg-primary text-primary-foreground hover:opacity-90;
 }
 
 .typeform-button-secondary {
-  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  @apply bg-secondary text-secondary-foreground hover:opacity-80;
 }
 
 .typeform-button-destructive {
-  @apply bg-destructive text-destructive-foreground hover:bg-destructive/90;
+  @apply bg-destructive text-destructive-foreground hover:opacity-90;
 }
 
 /* Progress bar animation */
@@ -115,5 +115,5 @@
 
 /* File upload area */
 .file-upload-area {
-  @apply border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors;
+  @apply border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary hover:opacity-50 transition-colors;
 }

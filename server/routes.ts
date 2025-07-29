@@ -19,7 +19,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const session = await storage.createPhotoSession(sessionData);
       res.json(session);
     } catch (error) {
-      res.status(400).json({ message: "Invalid session data", error: error.message });
+      res.status(400).json({ message: "Invalid session data", error: (error as Error).message });
     }
   });
 
@@ -32,7 +32,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       res.json(session);
     } catch (error) {
-      res.status(500).json({ message: "Failed to get session", error: error.message });
+      res.status(500).json({ message: "Failed to get session", error: (error as Error).message });
     }
   });
 
@@ -46,7 +46,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       res.json(session);
     } catch (error) {
-      res.status(500).json({ message: "Failed to update session", error: error.message });
+      res.status(500).json({ message: "Failed to update session", error: (error as Error).message });
     }
   });
 
@@ -92,7 +92,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       console.error("Photo verification error:", error);
-      res.status(500).json({ message: "Failed to verify photo", error: error.message });
+      res.status(500).json({ message: "Failed to verify photo", error: (error as Error).message });
     }
   });
 
@@ -103,7 +103,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const attempts = await storage.getPhotoAttempts(req.params.id, stepIndex);
       res.json(attempts);
     } catch (error) {
-      res.status(500).json({ message: "Failed to get attempts", error: error.message });
+      res.status(500).json({ message: "Failed to get attempts", error: (error as Error).message });
     }
   });
 
