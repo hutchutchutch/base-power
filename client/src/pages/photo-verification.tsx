@@ -325,20 +325,12 @@ export default function PhotoVerification() {
           </div>
 
           {/* 4. Verify Photo Button */}
-          {verificationState === 'capturing' && capturedImage && (
+          {capturedImage && verificationState === 'idle' && (
             <Button 
               onClick={handleVerifyPhoto}
               className="typeform-button typeform-button-primary"
-              disabled={verificationState === 'verifying'}
             >
-              {verificationState === 'verifying' ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  Verifying Photo...
-                </>
-              ) : (
-                'Verify Photo'
-              )}
+              Verify Photo
             </Button>
           )}
 
@@ -410,17 +402,7 @@ export default function PhotoVerification() {
 
   // Completion Step
   return (
-    <div className="min-h-screen bg-bg-light relative">
-      {/* Settings Gear - Fixed Position */}
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => setLocation('/admin')}
-        className="fixed top-4 right-4 z-50 bg-white shadow-md hover:bg-gray-50 border border-gray-200 rounded-full w-10 h-10 p-0"
-      >
-        <Settings size={16} className="text-gray-600" />
-      </Button>
-
+    <div className="min-h-screen bg-bg-light">
       <ProgressHeader 
         currentStep={totalSteps}
         totalSteps={totalSteps}

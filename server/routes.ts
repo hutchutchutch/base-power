@@ -247,6 +247,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ========== DEMO PHOTO VERIFICATION ROUTES ==========
+  // These are for the standalone photo verification demo page
+
+  // Create demo session (for standalone photo verification)
+  app.post("/api/sessions", async (req, res) => {
+    try {
+      // Simple demo session - no invitation needed
+      const sessionData = {
+        id: crypto.randomUUID(),
+        currentStep: req.body.currentStep || 0,
+        completedSteps: req.body.completedSteps || [],
+        isCompleted: false,
+        createdAt: new Date().toISOString()
+      };
+      
+      res.json(sessionData);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid session data", error: (error as Error).message });
+    }
+  });
+
+  // Demo photo verification endpoint
+  app.post("/api/sessions/:sessionId/verify", upload.fields([]), async (req, res) => {
+    try {
+      const { expectedObject, imageData } = req.body;
+      
+      if (!imageData) {
+        return res.status(400).json({ message: "No image provided" });
+      }
+
+      // Verify the photo using OpenAI Vision API
+      const verificationResult = await verifyPhotoObject(imageData, expectedObject);
+
+      res.json({
+        verification: verificationResult
+      });
+    } catch (error) {
+      console.error("Demo photo verification error:", error);
+      res.status(500).json({ message: "Failed to verify photo", error: (error as Error).message });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
