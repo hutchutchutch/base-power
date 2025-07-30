@@ -85,7 +85,7 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
           <div className="mt-4">
             <Button
               onClick={handleCapture}
-              className="w-full bg-brand-green text-white font-medium py-3 px-6 rounded-xl hover:bg-green-600 transition-colors"
+              className="w-full bg-brand-green text-white font-medium py-3 px-6 rounded-xl shadow-md opacity-100"
               disabled={isVerifying}
             >
               Capture Photo
@@ -110,7 +110,7 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
                 fileInputRef.current?.click();
               }
             }}
-            className="w-full bg-brand-green text-white font-medium py-3 px-6 rounded-xl hover:bg-green-600 transition-colors"
+            className="w-full bg-brand-green text-white font-medium py-3 px-6 rounded-xl shadow-md opacity-100"
             disabled={isVerifying}
           >
             Take Photo
