@@ -56,8 +56,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create survey
   app.post("/api/admin/surveys", async (req, res) => {
     try {
-      const surveyData = insertSurveySchema.parse(req.body);
+      const { title, description, utilityCompany, steps } = req.body;
+      
+      // Create the survey first
+      const surveyData = insertSurveySchema.parse({
+        title,
+        description,
+        utilityCompany,
+        adminId: req.body.adminId || "admin-id" // For now using default, should come from auth
+      });
+      
       const survey = await storage.createSurvey(surveyData);
+      
+      // Create steps if provided
+      if (steps && steps.length > 0) {
+        for (const step of steps) {
+          const stepData = insertSurveyStepSchema.parse({
+            surveyId: survey.id,
+            stepOrder: step.stepOrder,
+            title: step.title,
+            description: step.description,
+            expectedObject: step.expectedObject,
+            tips: step.tips,
+            validationRules: step.validationRules,
+            exampleImageUrl: step.exampleImageUrl,
+            isRequired: step.isRequired
+          });
+          await storage.createSurveyStep(stepData);
+        }
+      }
+      
       res.json(survey);
     } catch (error) {
       res.status(400).json({ message: "Failed to create survey", error: (error as Error).message });

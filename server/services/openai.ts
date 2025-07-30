@@ -14,7 +14,8 @@ export interface PhotoVerificationResult {
 
 export async function verifyPhotoObject(
   base64Image: string, 
-  expectedObject: string
+  expectedObject: string,
+  customValidationRules?: string
 ): Promise<PhotoVerificationResult> {
   try {
     const response = await openai.chat.completions.create({
@@ -24,15 +25,15 @@ export async function verifyPhotoObject(
           role: "system",
           content: `You are an expert object detection AI. Analyze the provided image and determine if it contains the expected object: "${expectedObject}". 
           
+          ${customValidationRules ? `Additional validation criteria: ${customValidationRules}` : 'Be strict in your verification - the object should be clearly visible and be the main subject of the photo. Consider variations in naming (e.g., "cell phone" vs "smartphone", "mobile phone" vs "phone").'}
+          
           Respond with JSON in this exact format:
           {
             "isCorrectObject": boolean,
             "confidence": number (0-1),
             "detectedObjects": ["object1", "object2", ...],
             "reasoning": "brief explanation of what you see and why it matches or doesn't match"
-          }
-          
-          Be strict in your verification - the object should be clearly visible and be the main subject of the photo. Consider variations in naming (e.g., "cell phone" vs "smartphone", "mobile phone" vs "phone").`
+          }`
         },
         {
           role: "user",

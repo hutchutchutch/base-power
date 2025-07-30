@@ -101,7 +101,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteSurvey(id: string): Promise<boolean> {
     const result = await db.delete(surveys).where(eq(surveys.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Survey step operations
@@ -126,7 +126,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteSurveyStep(id: string): Promise<boolean> {
     const result = await db.delete(surveySteps).where(eq(surveySteps.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Survey invitation operations

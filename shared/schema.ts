@@ -33,6 +33,7 @@ export const surveySteps = pgTable("survey_steps", {
   description: text("description").notNull(),
   expectedObject: text("expected_object").notNull(),
   tips: jsonb("tips").notNull(), // Array of tip strings
+  validationRules: text("validation_rules").notNull(), // LLM validation instructions
   exampleImageUrl: text("example_image_url"),
   isRequired: boolean("is_required").default(true),
   createdAt: timestamp("created_at").default(sql`now()`),

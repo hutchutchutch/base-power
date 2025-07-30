@@ -72,19 +72,19 @@ export default function AdminDashboard({ admin, onLogout }: AdminDashboardProps)
   const [userEmail, setUserEmail] = useState("");
 
   // Fetch surveys
-  const { data: surveys, isLoading: surveysLoading } = useQuery({
+  const { data: surveys = [], isLoading: surveysLoading } = useQuery({
     queryKey: [`/api/admin/${admin.id}/surveys`],
     enabled: !!admin.id
   });
 
   // Fetch survey steps
-  const { data: surveySteps } = useQuery({
+  const { data: surveySteps = [] } = useQuery({
     queryKey: [`/api/surveys/${selectedSurvey?.id}/steps`],
     enabled: !!selectedSurvey?.id
   });
 
   // Fetch survey invitations
-  const { data: surveyInvitations } = useQuery({
+  const { data: surveyInvitations = [] } = useQuery({
     queryKey: [`/api/admin/surveys/${selectedSurvey?.id}/invitations`],
     enabled: !!selectedSurvey?.id
   });
@@ -215,14 +215,24 @@ export default function AdminDashboard({ admin, onLogout }: AdminDashboardProps)
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-lg">Your Surveys</CardTitle>
-                <Button
-                  size="sm"
-                  onClick={() => setShowCreateSurvey(true)}
-                  className="bg-brand-green text-white"
-                >
-                  <Plus size={16} className="mr-1" />
-                  New
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    onClick={() => setLocation("/admin/create-survey")}
+                    className="bg-brand-green text-white"
+                  >
+                    <Plus size={16} className="mr-1" />
+                    Create Survey
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setShowCreateSurvey(true)}
+                  >
+                    <Plus size={16} className="mr-1" />
+                    Quick Add
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent className="space-y-2">
                 {surveysLoading ? (

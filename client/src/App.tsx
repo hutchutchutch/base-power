@@ -8,6 +8,7 @@ import PhotoVerification from "@/pages/photo-verification";
 import SurveyVerification from "@/pages/survey-verification";
 import AdminLogin from "@/pages/admin-login";
 import AdminDashboard from "@/pages/admin-dashboard";
+import SurveyGenerator from "@/pages/survey-generator";
 import NotFound from "@/pages/not-found";
 
 interface AdminUser {
@@ -65,6 +66,14 @@ function Router() {
       <Route path="/admin/dashboard">
         {admin ? (
           <AdminDashboard admin={admin} onLogout={handleAdminLogout} />
+        ) : (
+          <AdminLogin onLogin={handleAdminLogin} />
+        )}
+      </Route>
+      
+      <Route path="/admin/create-survey">
+        {admin ? (
+          <SurveyGenerator />
         ) : (
           <AdminLogin onLogin={handleAdminLogin} />
         )}
