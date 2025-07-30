@@ -89,7 +89,6 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
           ) : (
             <div className="text-center">
               <Camera className="text-gray-400 text-4xl mb-3 mx-auto" size={64} />
-              <p className="text-gray-500 text-sm">Camera preview will appear here</p>
             </div>
           )}
         </div>

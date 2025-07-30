@@ -32,35 +32,26 @@ interface VerificationResult {
 const photoTasks: PhotoTask[] = [
   {
     title: "🍿 Discover the Source of Snackery",
-    description: "Riddle: 'Where hunger meets its match and cravings find their cure, this sacred space holds treasures sweet and salty, that's for sure. With shelves that gleam and options vast, from chips to bars divine - what place provides the fuel we need to keep our spirits fine?'",
+    description: "Where hunger finds its cure and treats hide in wait, this shrine of sustenance determines your fate.",
     expectedObject: "snack area or kitchen",
     tips: [
-      "Look for the office kitchen, pantry, or snack area",
-      "Find where snacks and treats are stored",
-      "Capture the snack shelves, vending machine, or pantry",
-      "Show the area where office snacks are kept"
+      "Seek where silver packages gleam and hunger's call is heard."
     ]
   },
   {
     title: "💪 Find Where Calories Meet Their Doom",
-    description: "Riddle: 'When guilt from snacking weighs you down and energy seeks release, this space awaits with tools and weights to bring your mind some peace. With mats and bands and iron strong, where sweat becomes your friend - what room transforms the office warrior from beginning to the end?'",
+    description: "Iron and sweat, mats and might - where office warriors choose to fight.",
     expectedObject: "gym or exercise area",
     tips: [
-      "Search for the office gym, fitness room, or exercise area",
-      "Look for workout equipment, yoga mats, or fitness space",
-      "Capture weights, exercise bikes, or any fitness equipment",
-      "Find where office wellness activities happen"
+      "Where echoes of effort ring and metal meets the ground."
     ]
   },
   {
     title: "🚀 Seek the Chamber of Destiny",
-    description: "Riddle: 'In this hallowed hall where futures are made, where spirits are lifted or hopes can fade. With seats arranged for judgment's call, where presentations rise or fall - what room decides if you ascend or if your dreams are at an end?'",
+    description: "Seats in rows, screens that glow - where careers rise high or sink below.",
     expectedObject: "conference room or meeting room",
     tips: [
-      "Find the main conference room or boardroom",
-      "Look for the room where important meetings happen",
-      "Capture the space with presentation setup or meeting table",
-      "Show where big decisions and presentations are made"
+      "Find where voices carry weight and futures hang in the balance."
     ]
   }
 ];
