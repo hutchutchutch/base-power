@@ -1,16 +1,26 @@
-# Photo Verification Application
+# Dynamic Survey Management System for Utility Companies
 
 ## Overview
 
-This is a React-based photo verification application that uses AI (OpenAI GPT-4o) to verify that users take photos of specific objects in a guided sequence. The app presents users with a series of photo tasks (smartphone, keys, water bottle, wallet) and uses computer vision to verify that the correct objects are captured in each photo.
+This is a comprehensive React-based survey management platform that allows utility companies to create custom photo verification surveys and send them to users via email invitations. The system includes an admin panel for survey creation, dynamic survey configuration, and AI-powered photo verification using OpenAI Vision API. Users receive invitation links to complete surveys on mobile devices with a Typeform-style interface.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes (January 30, 2025)
+
+✓ Transformed simple photo verification app into full survey management system
+✓ Added PostgreSQL database with surveys, steps, invitations, and sessions tables  
+✓ Created admin panel for survey creation and user invitation management
+✓ Implemented dynamic survey configuration with custom steps and tips
+✓ Added email invitation system with unique tokens and expiry dates
+✓ Built mobile-first survey interface for users with invitation tokens
+✓ Maintained AI photo verification using OpenAI Vision API
+
 ## System Architecture
 
-The application follows a modern full-stack architecture with clear separation between frontend and backend concerns:
+The application follows a modern full-stack architecture with clear separation between admin and user experiences:
 
 ### Frontend Architecture
 - **Framework**: React 18 with TypeScript

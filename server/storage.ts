@@ -1,100 +1,194 @@
-import { type User, type InsertUser, type PhotoSession, type InsertPhotoSession, type PhotoAttempt, type InsertPhotoAttempt } from "@shared/schema";
+import { 
+  type AdminUser, 
+  type InsertAdminUser, 
+  type Survey, 
+  type InsertSurvey,
+  type SurveyStep, 
+  type InsertSurveyStep,
+  type SurveyInvitation, 
+  type InsertSurveyInvitation,
+  type UserSession, 
+  type InsertUserSession,
+  type PhotoAttempt, 
+  type InsertPhotoAttempt,
+  adminUsers,
+  surveys,
+  surveySteps,
+  surveyInvitations,
+  userSessions,
+  photoAttempts,
+} from "@shared/schema";
+import { db } from "./db";
+import { eq, desc, and, sql } from "drizzle-orm";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  // Admin user operations
+  getAdminUser(id: string): Promise<AdminUser | undefined>;
+  getAdminUserByEmail(email: string): Promise<AdminUser | undefined>;
+  createAdminUser(user: InsertAdminUser): Promise<AdminUser>;
   
-  createPhotoSession(session: InsertPhotoSession): Promise<PhotoSession>;
-  getPhotoSession(id: string): Promise<PhotoSession | undefined>;
-  updatePhotoSession(id: string, updates: Partial<PhotoSession>): Promise<PhotoSession | undefined>;
+  // Survey operations
+  createSurvey(survey: InsertSurvey): Promise<Survey>;
+  getSurvey(id: string): Promise<Survey | undefined>;
+  getSurveysByAdmin(adminId: string): Promise<Survey[]>;
+  updateSurvey(id: string, updates: Partial<Survey>): Promise<Survey | undefined>;
+  deleteSurvey(id: string): Promise<boolean>;
   
+  // Survey step operations
+  createSurveyStep(step: InsertSurveyStep): Promise<SurveyStep>;
+  getSurveySteps(surveyId: string): Promise<SurveyStep[]>;
+  updateSurveyStep(id: string, updates: Partial<SurveyStep>): Promise<SurveyStep | undefined>;
+  deleteSurveyStep(id: string): Promise<boolean>;
+  
+  // Survey invitation operations
+  createSurveyInvitation(invitation: InsertSurveyInvitation): Promise<SurveyInvitation>;
+  getSurveyInvitation(token: string): Promise<SurveyInvitation | undefined>;
+  getSurveyInvitations(surveyId: string): Promise<SurveyInvitation[]>;
+  updateSurveyInvitation(id: string, updates: Partial<SurveyInvitation>): Promise<SurveyInvitation | undefined>;
+  
+  // User session operations
+  createUserSession(session: InsertUserSession): Promise<UserSession>;
+  getUserSession(id: string): Promise<UserSession | undefined>;
+  updateUserSession(id: string, updates: Partial<UserSession>): Promise<UserSession | undefined>;
+  
+  // Photo attempt operations
   createPhotoAttempt(attempt: InsertPhotoAttempt): Promise<PhotoAttempt>;
-  getPhotoAttempts(sessionId: string, stepIndex?: number): Promise<PhotoAttempt[]>;
+  getPhotoAttempts(sessionId: string, stepId?: string): Promise<PhotoAttempt[]>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-  private photoSessions: Map<string, PhotoSession>;
-  private photoAttempts: Map<string, PhotoAttempt>;
-
-  constructor() {
-    this.users = new Map();
-    this.photoSessions = new Map();
-    this.photoAttempts = new Map();
-  }
-
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
-  }
-
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
+export class DatabaseStorage implements IStorage {
+  // Admin user operations
+  async getAdminUser(id: string): Promise<AdminUser | undefined> {
+    const [user] = await db.select().from(adminUsers).where(eq(adminUsers.id, id));
     return user;
   }
 
-  async createPhotoSession(insertSession: InsertPhotoSession): Promise<PhotoSession> {
-    const id = randomUUID();
-    const now = new Date();
-    const session: PhotoSession = { 
-      ...insertSession, 
-      id,
-      userId: insertSession.userId || null,
-      currentStep: insertSession.currentStep || null,
-      createdAt: now,
-      updatedAt: now,
-      completedSteps: insertSession.completedSteps || []
-    };
-    this.photoSessions.set(id, session);
+  async getAdminUserByEmail(email: string): Promise<AdminUser | undefined> {
+    const [user] = await db.select().from(adminUsers).where(eq(adminUsers.email, email));
+    return user;
+  }
+
+  async createAdminUser(insertUser: InsertAdminUser): Promise<AdminUser> {
+    const [user] = await db.insert(adminUsers).values(insertUser).returning();
+    return user;
+  }
+
+  // Survey operations
+  async createSurvey(insertSurvey: InsertSurvey): Promise<Survey> {
+    const [survey] = await db.insert(surveys).values(insertSurvey).returning();
+    return survey;
+  }
+
+  async getSurvey(id: string): Promise<Survey | undefined> {
+    const [survey] = await db.select().from(surveys).where(eq(surveys.id, id));
+    return survey;
+  }
+
+  async getSurveysByAdmin(adminId: string): Promise<Survey[]> {
+    return await db.select().from(surveys)
+      .where(eq(surveys.adminId, adminId))
+      .orderBy(desc(surveys.createdAt));
+  }
+
+  async updateSurvey(id: string, updates: Partial<Survey>): Promise<Survey | undefined> {
+    const [survey] = await db.update(surveys)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(surveys.id, id))
+      .returning();
+    return survey;
+  }
+
+  async deleteSurvey(id: string): Promise<boolean> {
+    const result = await db.delete(surveys).where(eq(surveys.id, id));
+    return result.rowCount > 0;
+  }
+
+  // Survey step operations
+  async createSurveyStep(insertStep: InsertSurveyStep): Promise<SurveyStep> {
+    const [step] = await db.insert(surveySteps).values(insertStep).returning();
+    return step;
+  }
+
+  async getSurveySteps(surveyId: string): Promise<SurveyStep[]> {
+    return await db.select().from(surveySteps)
+      .where(eq(surveySteps.surveyId, surveyId))
+      .orderBy(surveySteps.stepOrder);
+  }
+
+  async updateSurveyStep(id: string, updates: Partial<SurveyStep>): Promise<SurveyStep | undefined> {
+    const [step] = await db.update(surveySteps)
+      .set(updates)
+      .where(eq(surveySteps.id, id))
+      .returning();
+    return step;
+  }
+
+  async deleteSurveyStep(id: string): Promise<boolean> {
+    const result = await db.delete(surveySteps).where(eq(surveySteps.id, id));
+    return result.rowCount > 0;
+  }
+
+  // Survey invitation operations
+  async createSurveyInvitation(insertInvitation: InsertSurveyInvitation): Promise<SurveyInvitation> {
+    const [invitation] = await db.insert(surveyInvitations).values(insertInvitation).returning();
+    return invitation;
+  }
+
+  async getSurveyInvitation(token: string): Promise<SurveyInvitation | undefined> {
+    const [invitation] = await db.select().from(surveyInvitations)
+      .where(eq(surveyInvitations.invitationToken, token));
+    return invitation;
+  }
+
+  async getSurveyInvitations(surveyId: string): Promise<SurveyInvitation[]> {
+    return await db.select().from(surveyInvitations)
+      .where(eq(surveyInvitations.surveyId, surveyId))
+      .orderBy(desc(surveyInvitations.createdAt));
+  }
+
+  async updateSurveyInvitation(id: string, updates: Partial<SurveyInvitation>): Promise<SurveyInvitation | undefined> {
+    const [invitation] = await db.update(surveyInvitations)
+      .set(updates)
+      .where(eq(surveyInvitations.id, id))
+      .returning();
+    return invitation;
+  }
+
+  // User session operations
+  async createUserSession(insertSession: InsertUserSession): Promise<UserSession> {
+    const [session] = await db.insert(userSessions).values(insertSession).returning();
     return session;
   }
 
-  async getPhotoSession(id: string): Promise<PhotoSession | undefined> {
-    return this.photoSessions.get(id);
+  async getUserSession(id: string): Promise<UserSession | undefined> {
+    const [session] = await db.select().from(userSessions).where(eq(userSessions.id, id));
+    return session;
   }
 
-  async updatePhotoSession(id: string, updates: Partial<PhotoSession>): Promise<PhotoSession | undefined> {
-    const session = this.photoSessions.get(id);
-    if (!session) return undefined;
-    
-    const updatedSession: PhotoSession = {
-      ...session,
-      ...updates,
-      updatedAt: new Date()
-    };
-    this.photoSessions.set(id, updatedSession);
-    return updatedSession;
+  async updateUserSession(id: string, updates: Partial<UserSession>): Promise<UserSession | undefined> {
+    const [session] = await db.update(userSessions)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(userSessions.id, id))
+      .returning();
+    return session;
   }
 
+  // Photo attempt operations
   async createPhotoAttempt(insertAttempt: InsertPhotoAttempt): Promise<PhotoAttempt> {
-    const id = randomUUID();
-    const attempt: PhotoAttempt = { 
-      ...insertAttempt, 
-      id,
-      verificationResult: insertAttempt.verificationResult || null,
-      errorMessage: insertAttempt.errorMessage || null,
-      createdAt: new Date()
-    };
-    this.photoAttempts.set(id, attempt);
+    const [attempt] = await db.insert(photoAttempts).values(insertAttempt).returning();
     return attempt;
   }
 
-  async getPhotoAttempts(sessionId: string, stepIndex?: number): Promise<PhotoAttempt[]> {
-    return Array.from(this.photoAttempts.values()).filter(
-      (attempt) => 
-        attempt.sessionId === sessionId && 
-        (stepIndex === undefined || attempt.stepIndex === stepIndex)
-    );
+  async getPhotoAttempts(sessionId: string, stepId?: string): Promise<PhotoAttempt[]> {
+    const whereCondition = stepId 
+      ? and(eq(photoAttempts.sessionId, sessionId), eq(photoAttempts.stepId, stepId))
+      : eq(photoAttempts.sessionId, sessionId);
+    
+    return await db.select().from(photoAttempts)
+      .where(whereCondition)
+      .orderBy(photoAttempts.createdAt);
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
