@@ -6,7 +6,8 @@ import ProgressHeader from "@/components/progress-header";
 import CameraInterface from "@/components/camera-interface";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Camera, CheckCircle, AlertTriangle, Upload, Info } from "lucide-react";
+import { Camera, CheckCircle, AlertTriangle, Upload, Info, Settings } from "lucide-react";
+import { useLocation } from "wouter";
 
 interface PhotoTask {
   title: string;
@@ -77,6 +78,7 @@ const photoTasks: PhotoTask[] = [
 ];
 
 export default function PhotoVerification() {
+  const [, setLocation] = useLocation();
   const [currentStep, setCurrentStep] = useState(0);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [attemptCount, setAttemptCount] = useState(0);
@@ -226,7 +228,17 @@ export default function PhotoVerification() {
   // Welcome Step
   if (currentStep === 0) {
     return (
-      <div className="min-h-screen bg-bg-light">
+      <div className="min-h-screen bg-bg-light relative">
+        {/* Settings Gear - Fixed Position */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setLocation('/admin')}
+          className="fixed top-4 right-4 z-50 bg-white shadow-md hover:bg-gray-50 border border-gray-200 rounded-full w-10 h-10 p-0"
+        >
+          <Settings size={16} className="text-gray-600" />
+        </Button>
+
         <ProgressHeader 
           currentStep={currentStep + 1}
           totalSteps={totalSteps}
@@ -280,7 +292,17 @@ export default function PhotoVerification() {
     const task = photoTasks[taskIndex];
 
     return (
-      <div className="min-h-screen bg-bg-light">
+      <div className="min-h-screen bg-bg-light relative">
+        {/* Settings Gear - Fixed Position */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setLocation('/admin')}
+          className="fixed top-4 right-4 z-50 bg-white shadow-md hover:bg-gray-50 border border-gray-200 rounded-full w-10 h-10 p-0"
+        >
+          <Settings size={16} className="text-gray-600" />
+        </Button>
+
         <ProgressHeader 
           currentStep={currentStep + 1}
           totalSteps={totalSteps}
@@ -410,7 +432,17 @@ export default function PhotoVerification() {
 
   // Completion Step
   return (
-    <div className="min-h-screen bg-bg-light">
+    <div className="min-h-screen bg-bg-light relative">
+      {/* Settings Gear - Fixed Position */}
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => setLocation('/admin')}
+        className="fixed top-4 right-4 z-50 bg-white shadow-md hover:bg-gray-50 border border-gray-200 rounded-full w-10 h-10 p-0"
+      >
+        <Settings size={16} className="text-gray-600" />
+      </Button>
+
       <ProgressHeader 
         currentStep={totalSteps}
         totalSteps={totalSteps}
