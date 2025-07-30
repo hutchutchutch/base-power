@@ -6,12 +6,14 @@ import ProgressHeader from "@/components/progress-header";
 import CameraInterface from "@/components/camera-interface";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Camera, CheckCircle, AlertTriangle, Upload } from "lucide-react";
+import { Camera, CheckCircle, AlertTriangle, Upload, Info } from "lucide-react";
 
 interface PhotoTask {
   title: string;
   description: string;
   expectedObject: string;
+  exampleImage?: string;
+  tips: string[];
 }
 
 interface PhotoSession {
@@ -31,22 +33,46 @@ const photoTasks: PhotoTask[] = [
   {
     title: "Take a photo of your smartphone",
     description: "Position your phone clearly in the frame. Make sure the entire device is visible and well-lit.",
-    expectedObject: "smartphone"
+    expectedObject: "smartphone",
+    tips: [
+      "Use another device or camera to take the photo",
+      "Place phone on a flat surface",
+      "Ensure good lighting",
+      "Show the entire device"
+    ]
   },
   {
     title: "Take a photo of your keys",
     description: "Place your keys on a flat surface with good lighting. Ensure all keys are visible.",
-    expectedObject: "keys"
+    expectedObject: "keys",
+    tips: [
+      "Lay keys flat on a surface",
+      "Separate keys so they're all visible",
+      "Use natural light if possible",
+      "Include keychain if attached"
+    ]
   },
   {
     title: "Take a photo of a water bottle",
     description: "Hold or place a water bottle where it's clearly visible and well-lit.",
-    expectedObject: "water bottle"
+    expectedObject: "water bottle",
+    tips: [
+      "Show the full bottle including cap",
+      "Place on neutral background",
+      "Ensure label is readable",
+      "Avoid glare or reflections"
+    ]
   },
   {
     title: "Take a photo of your wallet",
     description: "Place your wallet on a flat surface. Make sure it's the main object in the frame.",
-    expectedObject: "wallet"
+    expectedObject: "wallet",
+    tips: [
+      "Show wallet closed",
+      "Place on flat surface",
+      "Center in frame",
+      "Good lighting without shadows"
+    ]
   }
 ];
 
@@ -55,8 +81,9 @@ export default function PhotoVerification() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [attemptCount, setAttemptCount] = useState(0);
   const [capturedPhotos, setCapturedPhotos] = useState<Array<{task: string, imageData: string}>>([]);
-  const [verificationState, setVerificationState] = useState<'idle' | 'verifying' | 'success' | 'error'>('idle');
+  const [verificationState, setVerificationState] = useState<'idle' | 'capturing' | 'verifying' | 'success' | 'error'>('idle');
   const [verificationResult, setVerificationResult] = useState<VerificationResult | null>(null);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const { toast } = useToast();
 
   const maxAttempts = 2;
@@ -139,11 +166,18 @@ export default function PhotoVerification() {
   const handlePhotoCapture = (imageData: string) => {
     if (currentStep === 0 || currentStep > photoTasks.length) return;
     
+    setCapturedImage(imageData);
+    setVerificationState('capturing');
+  };
+
+  const handleVerifyPhoto = () => {
+    if (!capturedImage || currentStep === 0 || currentStep > photoTasks.length) return;
+    
     setVerificationState('verifying');
     const taskIndex = currentStep - 1;
     const expectedObject = photoTasks[taskIndex].expectedObject;
     
-    verifyPhotoMutation.mutate({ imageData, expectedObject });
+    verifyPhotoMutation.mutate({ imageData: capturedImage, expectedObject });
   };
 
   const handleNextStep = () => {
@@ -151,6 +185,7 @@ export default function PhotoVerification() {
     setAttemptCount(0);
     setVerificationState('idle');
     setVerificationResult(null);
+    setCapturedImage(null);
   };
 
   const handlePreviousStep = () => {
@@ -159,12 +194,14 @@ export default function PhotoVerification() {
       setAttemptCount(0);
       setVerificationState('idle');
       setVerificationResult(null);
+      setCapturedImage(null);
     }
   };
 
   const handleRetry = () => {
     setVerificationState('idle');
     setVerificationResult(null);
+    setCapturedImage(null);
   };
 
   const handleUseAnyway = () => {
@@ -172,7 +209,7 @@ export default function PhotoVerification() {
     const taskIndex = currentStep - 1;
     setCapturedPhotos(prev => [...prev, {
       task: photoTasks[taskIndex].title,
-      imageData: '' // placeholder since we're using it anyway
+      imageData: capturedImage || '' // use captured image even if verification failed
     }]);
   };
 
@@ -182,6 +219,7 @@ export default function PhotoVerification() {
     setCapturedPhotos([]);
     setVerificationState('idle');
     setVerificationResult(null);
+    setCapturedImage(null);
     createSessionMutation.mutate();
   };
 
@@ -251,57 +289,84 @@ export default function PhotoVerification() {
           onBackClick={handlePreviousStep}
         />
         
-        <main className="mobile-container py-6 pb-24">
-          <div className="mb-6">
+        <main className="mobile-container py-6 pb-24 space-y-6">
+          {/* 1. Title & Description */}
+          <div className="text-center">
             <span className="text-sm text-brand-gray font-medium">Step {currentStep}</span>
             <h2 className="text-2xl font-bold text-gray-900 mt-1 mb-3">{task.title}</h2>
             <p className="text-brand-gray">{task.description}</p>
           </div>
 
-          <CameraInterface 
-            onPhotoCapture={handlePhotoCapture}
-            isVerifying={verificationState === 'verifying'}
-          />
+          {/* 2. Example Image Section */}
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center mb-3">
+                <Info className="text-brand-green mr-2" size={16} />
+                <h3 className="font-semibold text-gray-900">Photo Tips</h3>
+              </div>
+              <ul className="space-y-2">
+                {task.tips.map((tip, index) => (
+                  <li key={index} className="flex items-start text-sm text-brand-gray">
+                    <span className="text-brand-green mr-2 mt-0.5">•</span>
+                    {tip}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
 
-          {/* Verification Status */}
-          {verificationState !== 'idle' && (
-            <div className="mb-6">
-              {verificationState === 'success' && (
-                <div className="verification-success">
-                  <div className="flex items-center">
-                    <CheckCircle className="text-green-500 text-xl mr-3" />
-                    <div>
-                      <p className="font-medium text-green-800">Photo verified successfully!</p>
-                      <p className="text-sm text-green-600">We detected the correct object in your photo.</p>
-                    </div>
-                  </div>
-                </div>
+          {/* 3. Camera/Upload Interface */}
+          <div className="bg-white rounded-xl p-4 border border-gray-200">
+            <h3 className="font-semibold text-gray-900 mb-4 text-center">Take or Upload Photo</h3>
+            <CameraInterface 
+              onPhotoCapture={handlePhotoCapture}
+              isVerifying={verificationState === 'verifying'}
+            />
+          </div>
+
+          {/* 4. Verify Photo Button */}
+          {verificationState === 'capturing' && capturedImage && (
+            <Button 
+              onClick={handleVerifyPhoto}
+              className="typeform-button typeform-button-primary"
+              disabled={verificationState === 'verifying'}
+            >
+              {verificationState === 'verifying' ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Verifying Photo...
+                </>
+              ) : (
+                'Verify Photo'
               )}
+            </Button>
+          )}
 
-              {verificationState === 'error' && (
-                <div className="verification-error">
-                  <div className="flex items-center">
-                    <AlertTriangle className="text-red-500 text-xl mr-3" />
-                    <div>
-                      <p className="font-medium text-red-800">Photo verification failed</p>
-                      <p className="text-sm text-red-600">
-                        {verificationResult?.errorMessage || `We couldn't detect a ${task.expectedObject} in your photo. Please try again.`}
-                      </p>
-                    </div>
-                  </div>
+          {/* 5. Verification Results */}
+          {verificationState === 'success' && (
+            <div className="verification-success">
+              <div className="flex items-center">
+                <CheckCircle className="text-green-500 text-xl mr-3" />
+                <div>
+                  <p className="font-medium text-green-800">Photo verified successfully!</p>
+                  <p className="text-sm text-green-600">We detected the correct object in your photo.</p>
                 </div>
-              )}
+              </div>
+            </div>
+          )}
 
-              {verificationState === 'verifying' && (
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                  <div className="flex items-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500 mr-3"></div>
-                    <p className="font-medium text-blue-800">Verifying your photo...</p>
-                  </div>
+          {verificationState === 'error' && (
+            <div className="verification-error">
+              <div className="flex items-center">
+                <AlertTriangle className="text-red-500 text-xl mr-3" />
+                <div>
+                  <p className="font-medium text-red-800">Photo verification failed</p>
+                  <p className="text-sm text-red-600">
+                    {verificationResult?.errorMessage || `We couldn't detect a ${task.expectedObject} in your photo. Please try again.`}
+                  </p>
                 </div>
-              )}
-
-              {attemptCount < maxAttempts && verificationState === 'error' && (
+              </div>
+              {attemptCount < maxAttempts && (
                 <div className="text-center text-sm text-brand-gray mt-4">
                   Attempt {attemptCount} of {maxAttempts}
                 </div>
@@ -309,7 +374,7 @@ export default function PhotoVerification() {
             </div>
           )}
 
-          {/* Action Buttons */}
+          {/* 6. Action Buttons */}
           <div className="space-y-3">
             {verificationState === 'success' && (
               <Button 

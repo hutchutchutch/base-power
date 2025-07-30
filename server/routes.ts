@@ -7,7 +7,10 @@ import multer from "multer";
 
 const upload = multer({ 
   storage: multer.memoryStorage(),
-  limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
+  limits: { 
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+    fieldSize: 10 * 1024 * 1024 // 10MB field size limit for base64 images
+  }
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
