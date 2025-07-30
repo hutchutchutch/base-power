@@ -31,47 +31,36 @@ interface VerificationResult {
 
 const photoTasks: PhotoTask[] = [
   {
-    title: "🔍 Find the Communication Device",
-    description: "Riddle: 'In your pocket or bag it hides, connecting worlds far and wide. With apps and calls, it never fails - what device tells a thousand tales?'",
-    expectedObject: "smartphone",
+    title: "🍿 Discover the Source of Snackery",
+    description: "Riddle: 'Where hunger meets its match and cravings find their cure, this sacred space holds treasures sweet and salty, that's for sure. With shelves that gleam and options vast, from chips to bars divine - what place provides the fuel we need to keep our spirits fine?'",
+    expectedObject: "snack area or kitchen",
     tips: [
-      "Look for your mobile phone or smartphone",
-      "Use another device to take the photo",
-      "Place it clearly in view",
-      "Make sure the screen is visible"
+      "Look for the office kitchen, pantry, or snack area",
+      "Find where snacks and treats are stored",
+      "Capture the snack shelves, vending machine, or pantry",
+      "Show the area where office snacks are kept"
     ]
   },
   {
-    title: "🗝️ Find the Office Security Arsenal",
-    description: "Riddle: 'Jingling guardians, metal and small, they open the doors to rooms and all. In bunches they hang, with purpose so true - what unlocks the secrets waiting for you?'",
-    expectedObject: "keys",
+    title: "💪 Find Where Calories Meet Their Doom",
+    description: "Riddle: 'When guilt from snacking weighs you down and energy seeks release, this space awaits with tools and weights to bring your mind some peace. With mats and bands and iron strong, where sweat becomes your friend - what room transforms the office warrior from beginning to the end?'",
+    expectedObject: "gym or exercise area",
     tips: [
-      "Search for office keys or keychains",
-      "Look in desk drawers or key holders",
-      "Spread them out so all are visible",
-      "Include any office key fobs or cards"
+      "Search for the office gym, fitness room, or exercise area",
+      "Look for workout equipment, yoga mats, or fitness space",
+      "Capture weights, exercise bikes, or any fitness equipment",
+      "Find where office wellness activities happen"
     ]
   },
   {
-    title: "💧 Find the Hydration Station Vessel",
-    description: "Riddle: 'Clear or colored, tall it stands, holding liquid in your hands. From meetings long to coffee breaks - what container thirst it slakes?'",
-    expectedObject: "water bottle",
+    title: "🚀 Seek the Chamber of Destiny",
+    description: "Riddle: 'In this hallowed hall where futures are made, where spirits are lifted or hopes can fade. With seats arranged for judgment's call, where presentations rise or fall - what room decides if you ascend or if your dreams are at an end?'",
+    expectedObject: "conference room or meeting room",
     tips: [
-      "Look for any water bottle or drink container",
-      "Check the office kitchen or your desk",
-      "Show the full bottle including label",
-      "Make sure it's the main focus"
-    ]
-  },
-  {
-    title: "💳 Find the Treasure Keeper",
-    description: "Riddle: 'Leather or fabric, flat and neat, it holds your wealth both card and neat. In pockets deep or bags it stays - what guards your money through the days?'",
-    expectedObject: "wallet",
-    tips: [
-      "Search for your wallet or card holder",
-      "Check your bag, pocket, or desk",
-      "Place it flat and centered",
-      "Show it closed for security"
+      "Find the main conference room or boardroom",
+      "Look for the room where important meetings happen",
+      "Capture the space with presentation setup or meeting table",
+      "Show where big decisions and presentations are made"
     ]
   }
 ];
@@ -248,7 +237,7 @@ export default function PhotoVerification() {
               <h3 className="font-semibold text-gray-900 mb-3">🎯 Your Mission:</h3>
               <div className="bg-white rounded-lg p-4 mb-4 border-l-4 border-purple-500">
                 <p className="text-sm text-gray-700 italic">
-                  "Agent, you've been selected for a special mission at Gauntlet HQ. Hidden throughout the office are four legendary items of power. Each holds a secret that will unlock the next level of your journey. Use your wit to solve the riddles and your camera to capture proof of your discoveries."
+                  "Agent, you've been selected for a special mission at Gauntlet HQ. Three mystical locations await your discovery - each one crucial to the office ecosystem. From the realm of sustenance to the chamber of transformation, and finally to the hall where destinies are decided. Use your wit to solve the riddles and your camera to capture proof of your discoveries."
                 </p>
               </div>
               <ul className="space-y-2 text-sm text-brand-gray">
