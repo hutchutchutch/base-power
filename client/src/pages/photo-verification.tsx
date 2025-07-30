@@ -228,33 +228,33 @@ export default function PhotoVerification() {
             <div className="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-white text-2xl">🏢</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Gauntlet Hunt</h1>
-            <p className="text-brand-gray">Welcome to the legendary Gauntlet Hunt! Solve riddles and discover the secrets of Gauntlet HQ.</p>
+            <h1 className="text-2xl font-bold text-white mb-2">Gauntlet Hunt</h1>
+            <p className="text-gray-300">Welcome to the legendary Gauntlet Hunt! Solve riddles and discover the secrets of Gauntlet HQ.</p>
           </div>
 
-          <Card className="mb-6 bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200">
+          <Card className="mb-6 bg-gray-900 border-gray-700">
             <CardContent className="pt-6">
-              <h3 className="font-semibold text-gray-900 mb-3">🎯 Your Mission:</h3>
-              <div className="bg-white rounded-lg p-4 mb-4 border-l-4 border-purple-500">
-                <p className="text-sm text-gray-700 italic">
+              <h3 className="font-semibold text-white mb-3">🎯 Your Mission:</h3>
+              <div className="bg-black rounded-lg p-4 mb-4 border-l-4 border-white">
+                <p className="text-sm text-gray-300 italic">
                   "Agent, you've been selected for a special mission at Gauntlet HQ. Three mystical locations await your discovery - each one crucial to the office ecosystem. From the realm of sustenance to the chamber of transformation, and finally to the hall where destinies are decided. Use your wit to solve the riddles and your camera to capture proof of your discoveries."
                 </p>
               </div>
-              <ul className="space-y-2 text-sm text-brand-gray">
+              <ul className="space-y-2 text-sm text-gray-300">
                 <li className="flex items-center">
-                  <span className="text-purple-500 mr-3">🔍</span>
+                  <span className="text-white mr-3">🔍</span>
                   Sharp detective skills to solve riddles
                 </li>
                 <li className="flex items-center">
-                  <span className="text-purple-500 mr-3">📱</span>
+                  <span className="text-white mr-3">📱</span>
                   Camera access to capture evidence
                 </li>
                 <li className="flex items-center">
-                  <span className="text-purple-500 mr-3">💡</span>
+                  <span className="text-white mr-3">💡</span>
                   Creative thinking for hidden clues
                 </li>
                 <li className="flex items-center">
-                  <span className="text-purple-500 mr-3">🏆</span>
+                  <span className="text-white mr-3">🏆</span>
                   Determination to complete the quest
                 </li>
               </ul>
@@ -264,11 +264,11 @@ export default function PhotoVerification() {
         </main>
         
         {/* Fixed CTA Button for Mobile */}
-        <div className="fixed bottom-0 left-0 right-0 bg-white/95 border-t border-gray-200 shadow-lg z-50 fixed-cta">
+        <div className="fixed bottom-0 left-0 right-0 bg-black/95 border-t border-gray-700 shadow-lg z-50 fixed-cta">
           <div className="mobile-container pt-4 pb-6">
             <Button 
               onClick={handleNextStep}
-              className="typeform-button typeform-button-primary bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 w-full py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+              className="typeform-button typeform-button-primary bg-white hover:bg-gray-200 text-black w-full py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
             >
               🚀 Begin the Hunt
             </Button>
@@ -296,22 +296,22 @@ export default function PhotoVerification() {
         <main className="mobile-container py-6 pb-24 space-y-6">
           {/* 1. Title & Description */}
           <div className="text-center">
-            <span className="text-sm text-brand-gray font-medium">Step {currentStep}</span>
-            <h2 className="text-2xl font-bold text-gray-900 mt-1 mb-3">{task.title}</h2>
-            <p className="text-brand-gray">{task.description}</p>
+            <span className="text-sm text-gray-300 font-medium">Step {currentStep}</span>
+            <h2 className="text-2xl font-bold text-white mt-1 mb-3">{task.title}</h2>
+            <p className="text-gray-300">{task.description}</p>
           </div>
 
           {/* 2. Example Image Section */}
-          <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+          <Card className="bg-gray-900 border-gray-700">
             <CardContent className="pt-6">
               <div className="flex items-center mb-3">
-                <span className="text-amber-600 mr-2 text-lg">💡</span>
-                <h3 className="font-semibold text-gray-900">Detective Hints</h3>
+                <span className="text-white mr-2 text-lg">💡</span>
+                <h3 className="font-semibold text-white">Detective Hints</h3>
               </div>
               <ul className="space-y-2">
                 {task.tips.map((tip, index) => (
-                  <li key={index} className="flex items-start text-sm text-brand-gray">
-                    <span className="text-amber-600 mr-2 mt-0.5">🔸</span>
+                  <li key={index} className="flex items-start text-sm text-gray-300">
+                    <span className="text-white mr-2 mt-0.5">🔸</span>
                     {tip}
                   </li>
                 ))}
@@ -320,8 +320,8 @@ export default function PhotoVerification() {
           </Card>
 
           {/* 3. Camera/Upload Interface */}
-          <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <h3 className="font-semibold text-gray-900 mb-4 text-center">📸 Capture Your Evidence</h3>
+          <div className="bg-black rounded-xl p-4 border border-gray-700">
+            <h3 className="font-semibold text-white mb-4 text-center">📸 Capture Your Evidence</h3>
             <CameraInterface 
               onPhotoCapture={handlePhotoCapture}
               isVerifying={verificationState === 'verifying'}
@@ -340,24 +340,24 @@ export default function PhotoVerification() {
 
           {/* 5. Verification Results */}
           {verificationState === 'success' && (
-            <div className="verification-success bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200">
+            <div className="verification-success bg-gray-900 border border-white">
               <div className="flex items-center">
-                <span className="text-green-500 text-xl mr-3">🎉</span>
+                <span className="text-white text-xl mr-3">🎉</span>
                 <div>
-                  <p className="font-medium text-green-800">Treasure Found!</p>
-                  <p className="text-sm text-green-600">Excellent detective work! You've discovered one of the Gauntlet HQ artifacts.</p>
+                  <p className="font-medium text-white">Treasure Found!</p>
+                  <p className="text-sm text-gray-300">Excellent detective work! You've discovered one of the Gauntlet HQ artifacts.</p>
                 </div>
               </div>
             </div>
           )}
 
           {verificationState === 'error' && (
-            <div className="verification-error bg-gradient-to-r from-red-50 to-pink-50 border border-red-200">
+            <div className="verification-error bg-gray-900 border border-red-500">
               <div className="flex items-center">
                 <span className="text-red-500 text-xl mr-3">🕵️</span>
                 <div>
-                  <p className="font-medium text-red-800">The Mystery Continues...</p>
-                  <p className="text-sm text-red-600">
+                  <p className="font-medium text-red-400">The Mystery Continues...</p>
+                  <p className="text-sm text-gray-300">
                     {verificationResult?.errorMessage || `The artifact remains hidden. Review the riddle and search again for the ${task.expectedObject}.`}
                   </p>
                 </div>
@@ -419,25 +419,25 @@ export default function PhotoVerification() {
           <div className="w-20 h-20 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="text-white text-3xl" size={48} />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">🏆 Gauntlet Hunt Complete!</h2>
-          <p className="text-brand-gray mb-8">Congratulations, Agent! You've successfully completed the Gauntlet Hunt and mastered all three mystical locations of Gauntlet HQ.</p>
+          <h2 className="text-2xl font-bold text-white mb-3">🏆 Gauntlet Hunt Complete!</h2>
+          <p className="text-gray-300 mb-8">Congratulations, Agent! You've successfully completed the Gauntlet Hunt and mastered all three mystical locations of Gauntlet HQ.</p>
           
-          <Card className="mb-6 bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-200">
+          <Card className="mb-6 bg-gray-900 border-gray-700">
             <CardContent className="pt-6">
-              <h3 className="font-semibold text-gray-900 mb-4">🗂️ Your Discovered Artifacts:</h3>
+              <h3 className="font-semibold text-white mb-4">🗂️ Your Discovered Artifacts:</h3>
               <div className="grid grid-cols-2 gap-3">
                 {capturedPhotos.map((photo, index) => (
-                  <div key={index} className="bg-gray-100 rounded-lg p-3 text-center">
-                    <div className="w-full aspect-square bg-gray-200 rounded mb-2 overflow-hidden">
+                  <div key={index} className="bg-black rounded-lg p-3 text-center border border-gray-700">
+                    <div className="w-full aspect-square bg-gray-800 rounded mb-2 overflow-hidden">
                       {photo.imageData ? (
                         <img src={photo.imageData} alt={photo.task} className="w-full h-full object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <Camera className="text-gray-400" size={24} />
+                          <Camera className="text-gray-500" size={24} />
                         </div>
                       )}
                     </div>
-                    <p className="text-xs text-gray-600 font-medium">
+                    <p className="text-xs text-white font-medium">
                       {photo.task.split(' ').slice(-1)[0]}
                     </p>
                   </div>
@@ -448,7 +448,7 @@ export default function PhotoVerification() {
 
           <Button 
             onClick={handleRestart}
-            className="typeform-button typeform-button-primary bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+            className="typeform-button typeform-button-primary bg-white hover:bg-gray-200 text-black"
           >
             🔄 New Adventure
           </Button>
