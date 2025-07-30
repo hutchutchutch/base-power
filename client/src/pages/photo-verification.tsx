@@ -279,14 +279,24 @@ export default function PhotoVerification() {
         />
         
         <main className="mobile-container py-6 pb-24 space-y-6">
-          {/* 1. Title & Description */}
+          {/* Step */}
           <div className="text-center">
             <span className="text-sm text-brand-gray font-medium">Step {currentStep}</span>
-            <h2 className="text-2xl font-bold text-gray-900 mt-1 mb-3">{task.title}</h2>
-            <p className="text-brand-gray">{task.description}</p>
           </div>
 
-          {/* Detective Hints */}
+          {/* Title */}
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-gray-900">{task.title}</h2>
+          </div>
+
+          {/* Riddle */}
+          <Card>
+            <CardContent className="pt-6">
+              <p className="text-brand-gray text-center">{task.description}</p>
+            </CardContent>
+          </Card>
+
+          {/* Riddle Detection */}
           <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
             <CardContent className="pt-6">
               <div className="flex items-center mb-3">
@@ -299,7 +309,7 @@ export default function PhotoVerification() {
             </CardContent>
           </Card>
 
-          {/* Camera/Upload Interface */}
+          {/* Upload Image */}
           <div className="bg-white rounded-xl p-4 border border-gray-200">
             <h3 className="font-semibold text-gray-900 mb-4 text-center">📸 Capture Your Evidence</h3>
             <CameraInterface 
@@ -308,13 +318,13 @@ export default function PhotoVerification() {
             />
           </div>
 
-          {/* 4. Verify Photo Button */}
+          {/* Analyze Image CTA */}
           {capturedImage && verificationState === 'idle' && (
             <Button 
               onClick={handleVerifyPhoto}
               className="typeform-button typeform-button-primary"
             >
-              Verify Photo
+              Analyze Image
             </Button>
           )}
 
