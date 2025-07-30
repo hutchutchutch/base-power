@@ -238,12 +238,6 @@ export default function PhotoVerification() {
 
           <Card className="mb-6 bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200">
             <CardContent className="pt-6">
-              <h3 className="font-semibold text-gray-900 mb-3">🎯 Your Mission:</h3>
-              <div className="bg-white rounded-lg p-4 mb-4 border-l-4 border-purple-500">
-                <p className="text-sm text-gray-700 italic">
-                  "Agent, you've been selected for a special mission at Gauntlet HQ. Three mystical locations await your discovery - each one crucial to the office ecosystem. From the realm of sustenance to the chamber of transformation, and finally to the hall where destinies are decided. Use your wit to solve the riddles and your camera to capture proof of your discoveries."
-                </p>
-              </div>
               <ul className="space-y-2 text-sm text-brand-gray">
                 <li className="flex items-center">
                   <span className="text-purple-500 mr-3">🔍</span>
@@ -256,10 +250,6 @@ export default function PhotoVerification() {
                 <li className="flex items-center">
                   <span className="text-purple-500 mr-3">💡</span>
                   Creative thinking for hidden clues
-                </li>
-                <li className="flex items-center">
-                  <span className="text-purple-500 mr-3">🏆</span>
-                  Determination to complete the quest
                 </li>
               </ul>
             </CardContent>
