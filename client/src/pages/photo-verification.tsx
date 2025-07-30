@@ -225,11 +225,11 @@ export default function PhotoVerification() {
         
         <main className="mobile-container py-6 pb-20">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-white text-2xl">🏢</span>
+            <div className="w-20 h-20 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <span className="text-white text-4xl">🥊</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Gauntlet Hunt</h1>
-            <p className="text-brand-gray">Welcome to the legendary Gauntlet Hunt! Solve riddles and discover the secrets of Gauntlet HQ.</p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">Gauntlet Hunt</h1>
+            <p className="text-brand-gray">Discover the secrets of Gauntlet HQ</p>
           </div>
 
           <Card className="mb-6 bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200">
