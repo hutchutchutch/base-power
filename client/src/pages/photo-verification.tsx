@@ -147,11 +147,6 @@ export default function PhotoVerification() {
           task: photoTasks[taskIndex].title,
           imageData: data.imageData
         }]);
-        
-        // Auto-advance after 1.5 seconds
-        setTimeout(() => {
-          handleNextStep();
-        }, 1500);
       } else {
         setVerificationState('error');
       }
@@ -205,19 +200,19 @@ export default function PhotoVerification() {
     }
   };
 
-  const handleRetryPhoto = () => {
+  const handleRetry = () => {
     setVerificationState('idle');
     setVerificationResult(null);
     setCapturedImage(null);
   };
 
   const handleUseAnyway = () => {
+    setVerificationState('success');
     const taskIndex = currentStep - 1;
     setCapturedPhotos(prev => [...prev, {
       task: photoTasks[taskIndex].title,
-      imageData: capturedImage || ''
+      imageData: capturedImage || '' // use captured image even if verification failed
     }]);
-    handleNextStep();
   };
 
   const handleRestart = () => {
@@ -251,7 +246,7 @@ export default function PhotoVerification() {
           showBackButton={false}
         />
         
-        <main className="mobile-container py-6 pb-32">
+        <main className="mobile-container py-6 pb-24">
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-4">
               <Camera className="text-white text-2xl" size={32} />
@@ -279,20 +274,14 @@ export default function PhotoVerification() {
               </ul>
             </CardContent>
           </Card>
-        </main>
-        
-        {/* Fixed bottom CTA - Debug visible */}
-        <div 
-          className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4" 
-          style={{ zIndex: 9999 }}
-        >
+
           <Button 
             onClick={handleNextStep}
-            className="w-full bg-brand-green text-white hover:bg-green-700 py-4 text-lg font-medium rounded-xl"
+            className="typeform-button typeform-button-primary"
           >
             Get Started
           </Button>
-        </div>
+        </main>
       </div>
     );
   }
@@ -322,7 +311,7 @@ export default function PhotoVerification() {
           onBackClick={handlePreviousStep}
         />
         
-        <main className="mobile-container py-6 pb-32 space-y-6">
+        <main className="mobile-container py-6 pb-24 space-y-6">
           {/* 1. Title & Description */}
           <div className="text-center">
             <span className="text-sm text-brand-gray font-medium">Step {currentStep}</span>
@@ -349,9 +338,7 @@ export default function PhotoVerification() {
           </Card>
 
           {/* 3. Camera/Upload Interface */}
-          <div className={`bg-white rounded-xl p-4 border border-gray-200 transition-all duration-500 ${
-            verificationState === 'success' ? 'border-green-500 shadow-green-200 shadow-lg animate-pulse' : ''
-          }`}>
+          <div className="bg-white rounded-xl p-4 border border-gray-200">
             <h3 className="font-semibold text-gray-900 mb-4 text-center">Take or Upload Photo</h3>
             <CameraInterface 
               onPhotoCapture={handlePhotoCapture}
@@ -359,22 +346,40 @@ export default function PhotoVerification() {
             />
           </div>
 
+          {/* 4. Verify Photo Button */}
+          {verificationState === 'capturing' && capturedImage && (
+            <Button 
+              onClick={handleVerifyPhoto}
+              className="typeform-button typeform-button-primary"
+              disabled={verificationState === 'verifying'}
+            >
+              {verificationState === 'verifying' ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Verifying Photo...
+                </>
+              ) : (
+                'Verify Photo'
+              )}
+            </Button>
+          )}
+
           {/* 5. Verification Results */}
           {verificationState === 'success' && (
-            <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-              <div className="flex items-center justify-center">
-                <CheckCircle className="text-green-500 text-2xl mr-3" />
-                <div className="text-center">
-                  <p className="font-bold text-green-800 text-lg">Success!</p>
-                  <p className="text-sm text-green-600">Moving to next step...</p>
+            <div className="verification-success">
+              <div className="flex items-center">
+                <CheckCircle className="text-green-500 text-xl mr-3" />
+                <div>
+                  <p className="font-medium text-green-800">Photo verified successfully!</p>
+                  <p className="text-sm text-green-600">We detected the correct object in your photo.</p>
                 </div>
               </div>
             </div>
           )}
 
           {verificationState === 'error' && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-              <div className="flex items-center mb-4">
+            <div className="verification-error">
+              <div className="flex items-center">
                 <AlertTriangle className="text-red-500 text-xl mr-3" />
                 <div>
                   <p className="font-medium text-red-800">Photo verification failed</p>
@@ -384,65 +389,41 @@ export default function PhotoVerification() {
                 </div>
               </div>
               {attemptCount < maxAttempts && (
-                <div className="text-center text-sm text-brand-gray mb-4">
+                <div className="text-center text-sm text-brand-gray mt-4">
                   Attempt {attemptCount} of {maxAttempts}
                 </div>
               )}
             </div>
           )}
 
-          {/* Error action buttons */}
-          {verificationState === 'error' && (
-            <div className="flex space-x-3">
+          {/* 6. Action Buttons */}
+          <div className="space-y-3">
+            {verificationState === 'success' && (
               <Button 
-                onClick={handleRetryPhoto}
-                variant="outline"
-                className="flex-1"
+                onClick={handleNextStep}
+                className="typeform-button typeform-button-primary"
+              >
+                Continue
+              </Button>
+            )}
+            
+            {verificationState === 'error' && attemptCount < maxAttempts && (
+              <Button 
+                onClick={handleRetry}
+                className="typeform-button typeform-button-secondary"
               >
                 Try Again
               </Button>
-              {attemptCount >= maxAttempts && (
-                <Button 
-                  onClick={handleUseAnyway}
-                  className="flex-1 bg-gray-600 text-white hover:bg-gray-700"
-                >
-                  Use Photo Anyway
-                </Button>
-              )}
-            </div>
-          )}
-
-          {/* Fixed bottom CTA */}
-          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">
-            <Button 
-              onClick={capturedImage ? handleVerifyPhoto : () => {}}
-              className={`w-full py-4 text-lg font-medium rounded-xl transition-all duration-200 ${
-                verificationState === 'verifying' 
-                  ? 'bg-blue-500 text-white cursor-not-allowed' 
-                  : verificationState === 'success'
-                  ? 'bg-green-500 text-white cursor-not-allowed'
-                  : capturedImage 
-                  ? 'bg-brand-green text-white hover:bg-green-700' 
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              }`}
-              disabled={!capturedImage || verificationState === 'verifying' || verificationState === 'success'}
-            >
-              {verificationState === 'verifying' ? (
-                <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2 inline-block"></div>
-                  Verifying Photo...
-                </>
-              ) : verificationState === 'success' ? (
-                <>
-                  <CheckCircle className="w-5 h-5 mr-2 inline-block" />
-                  Success!
-                </>
-              ) : capturedImage ? (
-                'Verify Photo'
-              ) : (
-                'Take Photo'
-              )}
-            </Button>
+            )}
+            
+            {verificationState === 'error' && attemptCount >= maxAttempts && (
+              <Button 
+                onClick={handleUseAnyway}
+                className="typeform-button typeform-button-destructive"
+              >
+                Use Photo Anyway
+              </Button>
+            )}
           </div>
         </main>
       </div>
