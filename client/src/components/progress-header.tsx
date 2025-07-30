@@ -1,5 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "wouter";
 
 interface ProgressHeaderProps {
   currentStep: number;
@@ -16,6 +17,7 @@ export default function ProgressHeader({
   showBackButton, 
   onBackClick 
 }: ProgressHeaderProps) {
+  const [, setLocation] = useLocation();
   return (
     <header className="bg-white shadow-sm p-4 sticky top-0 z-50">
       <div className="mobile-container">
@@ -31,9 +33,12 @@ export default function ProgressHeader({
                 <ArrowLeft size={20} />
               </Button>
             )}
-            <div className="bg-gray-200 rounded-lg px-3 py-1.5">
+            <button 
+              onClick={() => setLocation('/admin')}
+              className="bg-gray-200 hover:bg-gray-300 transition-colors rounded-lg px-3 py-1.5 cursor-pointer"
+            >
               <span className="text-gray-600 font-medium text-sm">BASE</span>
-            </div>
+            </button>
           </div>
           <div className="text-sm text-brand-gray">
             <span>{currentStep} of {totalSteps}</span>
