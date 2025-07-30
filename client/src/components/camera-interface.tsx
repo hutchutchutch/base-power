@@ -26,7 +26,6 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
   const handleCapture = () => {
     const imageData = capturePhoto();
     if (imageData) {
-      setCapturedImage(imageData);
       onPhotoCapture(imageData);
     }
   };
@@ -37,7 +36,6 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
       const reader = new FileReader();
       reader.onload = (e) => {
         const imageData = e.target?.result as string;
-        setCapturedImage(imageData);
         onPhotoCapture(imageData);
       };
       reader.readAsDataURL(file);
@@ -53,23 +51,7 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
 
   return (
     <div className="text-center">
-      {capturedImage ? (
-        <div className="space-y-4">
-          <img 
-            src={capturedImage} 
-            alt="Captured" 
-            className="w-full h-64 object-cover rounded-lg mx-auto"
-          />
-          <Button
-            onClick={handleRetake}
-            variant="outline"
-            className="w-full"
-            disabled={isVerifying}
-          >
-            Retake Photo
-          </Button>
-        </div>
-      ) : isStreaming ? (
+      {isStreaming ? (
         <div className="relative">
           <video
             ref={videoRef}
