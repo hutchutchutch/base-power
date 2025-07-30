@@ -52,20 +52,28 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
   };
 
   return (
-    <div>
+    <div className="text-center">
       {capturedImage ? (
-        <div className="relative">
+        <div className="space-y-4">
           <img 
             src={capturedImage} 
             alt="Captured" 
-            className="w-full h-full object-cover rounded-lg"
+            className="w-full h-64 object-cover rounded-lg mx-auto"
           />
+          <Button
+            onClick={handleRetake}
+            variant="outline"
+            className="w-full"
+            disabled={isVerifying}
+          >
+            Retake Photo
+          </Button>
         </div>
       ) : isStreaming ? (
         <div className="relative">
           <video
             ref={videoRef}
-            className="w-full h-full object-cover rounded-lg"
+            className="w-full h-64 object-cover rounded-lg"
             playsInline
             muted
           />
@@ -74,20 +82,18 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
             className="hidden"
           />
           
-          {/* Camera Controls */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+          <div className="mt-4">
             <Button
               onClick={handleCapture}
-              className="capture-button"
+              className="w-full bg-brand-green text-white font-medium py-3 px-6 rounded-xl hover:bg-green-600 transition-colors"
               disabled={isVerifying}
             >
-              <div className="capture-button-inner"></div>
+              Capture Photo
             </Button>
           </div>
         </div>
       ) : (
-        <div className="text-center">
-          <p className="text-gray-600 mb-2">Choose file or enable camera access</p>
+        <div>
           <input
             ref={fileInputRef}
             type="file"
@@ -97,46 +103,25 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
             className="hidden"
           />
           <Button
-            variant="link"
-            onClick={() => fileInputRef.current?.click()}
-            className="text-brand-green font-medium hover:underline"
-          >
-            Select Photo
-          </Button>
-          <p className="text-xs text-gray-500 mt-2">Size limit: 10MB</p>
-        </div>
-      )}
-      
-      {/* Action Buttons */}
-      <div className="mt-4 space-y-2">
-        {!hasPermission && !capturedImage && (
-          <Button
-            onClick={startCamera}
+            onClick={() => {
+              if (hasPermission) {
+                startCamera();
+              } else {
+                fileInputRef.current?.click();
+              }
+            }}
             className="w-full bg-brand-green text-white font-medium py-3 px-6 rounded-xl hover:bg-green-600 transition-colors"
             disabled={isVerifying}
           >
-            <Camera className="mr-2" size={20} />
-            Enable Camera
+            Take Photo
           </Button>
-        )}
-
-        {capturedImage && (
-          <Button
-            onClick={handleRetake}
-            variant="outline"
-            className="w-full"
-            disabled={isVerifying}
-          >
-            Retake Photo
-          </Button>
-        )}
-
-        {error && (
-          <p className="text-sm text-red-600 text-center mt-2">
-            {error}
-          </p>
-        )}
-      </div>
+          {error && (
+            <p className="text-sm text-red-600 text-center mt-2">
+              {error}
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
