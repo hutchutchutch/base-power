@@ -279,17 +279,17 @@ export default function PhotoVerification() {
               </ul>
             </CardContent>
           </Card>
-
-          {/* Fixed bottom CTA */}
-          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40">
-            <Button 
-              onClick={handleNextStep}
-              className="w-full bg-brand-green text-white hover:bg-green-700 py-4 text-lg font-medium rounded-xl"
-            >
-              Get Started
-            </Button>
-          </div>
         </main>
+        
+        {/* Fixed bottom CTA */}
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50">
+          <Button 
+            onClick={handleNextStep}
+            className="w-full bg-brand-green text-white hover:bg-green-700 py-4 text-lg font-medium rounded-xl"
+          >
+            Get Started
+          </Button>
+        </div>
       </div>
     );
   }
