@@ -502,7 +502,7 @@ export default function AdminDashboard({ admin, onLogout }: AdminDashboardProps)
       {/* Floating Action Button for Quick Add */}
       <Button
         onClick={() => setShowCreateSurvey(true)}
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-brand-green text-white shadow-lg hover:shadow-xl transition-all duration-200 z-50"
+        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-brand-green text-white shadow-lg hover:shadow-xl transition-all duration-200 z-50 flex items-center justify-center"
         size="icon"
       >
         <Plus size={24} />
