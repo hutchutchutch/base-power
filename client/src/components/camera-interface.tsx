@@ -52,72 +52,61 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
   };
 
   return (
-    <div className="bg-white rounded-xl p-4 mb-6 border border-gray-200">
-      <div className="relative">
-        {/* Camera Preview or Captured Image */}
-        <div className="camera-preview">
-          {capturedImage ? (
-            <img 
-              src={capturedImage} 
-              alt="Captured" 
-              className="w-full h-full object-cover rounded-lg"
-            />
-          ) : isStreaming ? (
-            <>
-              <video
-                ref={videoRef}
-                className="w-full h-full object-cover rounded-lg"
-                playsInline
-                muted
-              />
-              <canvas
-                ref={canvasRef}
-                className="hidden"
-              />
-              
-              {/* Camera Controls */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                <Button
-                  onClick={handleCapture}
-                  className="capture-button"
-                  disabled={isVerifying}
-                >
-                  <div className="capture-button-inner"></div>
-                </Button>
-              </div>
-            </>
-          ) : (
-            <div className="text-center">
-              <Camera className="text-gray-400 text-4xl mb-3 mx-auto" size={64} />
-            </div>
-          )}
+    <div>
+      {capturedImage ? (
+        <div className="relative">
+          <img 
+            src={capturedImage} 
+            alt="Captured" 
+            className="w-full h-full object-cover rounded-lg"
+          />
         </div>
-
-        {/* File Upload Alternative */}
-        {!isStreaming && !capturedImage && (
-          <div className="file-upload-area mt-4">
-            <CloudUpload className="text-gray-400 text-3xl mb-3 mx-auto" size={48} />
-            <p className="text-gray-600 mb-2">Choose file or enable camera access</p>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              onChange={handleFileUpload}
-              className="hidden"
-            />
+      ) : isStreaming ? (
+        <div className="relative">
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover rounded-lg"
+            playsInline
+            muted
+          />
+          <canvas
+            ref={canvasRef}
+            className="hidden"
+          />
+          
+          {/* Camera Controls */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
             <Button
-              variant="link"
-              onClick={() => fileInputRef.current?.click()}
-              className="text-brand-green font-medium hover:underline"
+              onClick={handleCapture}
+              className="capture-button"
+              disabled={isVerifying}
             >
-              Select Photo
+              <div className="capture-button-inner"></div>
             </Button>
-            <p className="text-xs text-gray-500 mt-2">Size limit: 10MB</p>
           </div>
-        )}
-      </div>
-
+        </div>
+      ) : (
+        <div className="text-center">
+          <p className="text-gray-600 mb-2">Choose file or enable camera access</p>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            onChange={handleFileUpload}
+            className="hidden"
+          />
+          <Button
+            variant="link"
+            onClick={() => fileInputRef.current?.click()}
+            className="text-brand-green font-medium hover:underline"
+          >
+            Select Photo
+          </Button>
+          <p className="text-xs text-gray-500 mt-2">Size limit: 10MB</p>
+        </div>
+      )}
+      
       {/* Action Buttons */}
       <div className="mt-4 space-y-2">
         {!hasPermission && !capturedImage && (
