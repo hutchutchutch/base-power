@@ -228,8 +228,8 @@ export default function PhotoVerification() {
             <div className="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-white text-2xl">🏢</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Office Scavenger Hunt</h1>
-            <p className="text-brand-gray">Welcome to the Gauntlet HQ treasure hunt! Solve riddles and find special office items.</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Gauntlet Hunt</h1>
+            <p className="text-brand-gray">Welcome to the legendary Gauntlet Hunt! Solve riddles and discover the secrets of Gauntlet HQ.</p>
           </div>
 
           <Card className="mb-6 bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200">
@@ -419,8 +419,8 @@ export default function PhotoVerification() {
           <div className="w-20 h-20 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="text-white text-3xl" size={48} />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">🏆 Mission Accomplished!</h2>
-          <p className="text-brand-gray mb-8">Congratulations, Agent! You've successfully completed the Gauntlet HQ scavenger hunt and discovered all the legendary artifacts.</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">🏆 Gauntlet Hunt Complete!</h2>
+          <p className="text-brand-gray mb-8">Congratulations, Agent! You've successfully completed the Gauntlet Hunt and mastered all three mystical locations of Gauntlet HQ.</p>
           
           <Card className="mb-6 bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-200">
             <CardContent className="pt-6">
