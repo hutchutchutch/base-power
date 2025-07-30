@@ -93,7 +93,7 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
           </div>
         </div>
       ) : (
-        <div>
+        <div className="w-full">
           <input
             ref={fileInputRef}
             type="file"
@@ -102,19 +102,20 @@ export default function CameraInterface({ onPhotoCapture, isVerifying }: CameraI
             onChange={handleFileUpload}
             className="hidden"
           />
-          <Button
+          <button
             onClick={() => {
+              console.log('Take Photo clicked, hasPermission:', hasPermission);
               if (hasPermission) {
                 startCamera();
               } else {
                 fileInputRef.current?.click();
               }
             }}
-            className="w-full bg-brand-green text-white font-medium py-3 px-6 rounded-xl shadow-md opacity-100"
+            className="w-full bg-green-600 text-white font-medium py-4 px-6 rounded-xl shadow-lg"
             disabled={isVerifying}
           >
             Take Photo
-          </Button>
+          </button>
           {error && (
             <p className="text-sm text-red-600 text-center mt-2">
               {error}
