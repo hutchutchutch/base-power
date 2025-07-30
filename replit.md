@@ -17,6 +17,8 @@ Preferred communication style: Simple, everyday language.
 ✓ Added email invitation system with unique tokens and expiry dates
 ✓ Built mobile-first survey interface for users with invitation tokens
 ✓ Maintained AI photo verification using OpenAI Vision API
+✓ Redesigned landing page as "Office Scavenger Hunt" with riddle-based challenges
+✓ Added themed UI with Gauntlet HQ branding and treasure hunt narrative
 
 ## System Architecture
 

@@ -31,47 +31,47 @@ interface VerificationResult {
 
 const photoTasks: PhotoTask[] = [
   {
-    title: "Take a photo of your smartphone",
-    description: "Position your phone clearly in the frame. Make sure the entire device is visible and well-lit.",
+    title: "🔍 Find the Communication Device",
+    description: "Riddle: 'In your pocket or bag it hides, connecting worlds far and wide. With apps and calls, it never fails - what device tells a thousand tales?'",
     expectedObject: "smartphone",
     tips: [
-      "Use another device or camera to take the photo",
-      "Place phone on a flat surface",
-      "Ensure good lighting",
-      "Show the entire device"
+      "Look for your mobile phone or smartphone",
+      "Use another device to take the photo",
+      "Place it clearly in view",
+      "Make sure the screen is visible"
     ]
   },
   {
-    title: "Take a photo of your keys",
-    description: "Place your keys on a flat surface with good lighting. Ensure all keys are visible.",
+    title: "🗝️ Find the Office Security Arsenal",
+    description: "Riddle: 'Jingling guardians, metal and small, they open the doors to rooms and all. In bunches they hang, with purpose so true - what unlocks the secrets waiting for you?'",
     expectedObject: "keys",
     tips: [
-      "Lay keys flat on a surface",
-      "Separate keys so they're all visible",
-      "Use natural light if possible",
-      "Include keychain if attached"
+      "Search for office keys or keychains",
+      "Look in desk drawers or key holders",
+      "Spread them out so all are visible",
+      "Include any office key fobs or cards"
     ]
   },
   {
-    title: "Take a photo of a water bottle",
-    description: "Hold or place a water bottle where it's clearly visible and well-lit.",
+    title: "💧 Find the Hydration Station Vessel",
+    description: "Riddle: 'Clear or colored, tall it stands, holding liquid in your hands. From meetings long to coffee breaks - what container thirst it slakes?'",
     expectedObject: "water bottle",
     tips: [
-      "Show the full bottle including cap",
-      "Place on neutral background",
-      "Ensure label is readable",
-      "Avoid glare or reflections"
+      "Look for any water bottle or drink container",
+      "Check the office kitchen or your desk",
+      "Show the full bottle including label",
+      "Make sure it's the main focus"
     ]
   },
   {
-    title: "Take a photo of your wallet",
-    description: "Place your wallet on a flat surface. Make sure it's the main object in the frame.",
+    title: "💳 Find the Treasure Keeper",
+    description: "Riddle: 'Leather or fabric, flat and neat, it holds your wealth both card and neat. In pockets deep or bags it stays - what guards your money through the days?'",
     expectedObject: "wallet",
     tips: [
-      "Show wallet closed",
-      "Place on flat surface",
-      "Center in frame",
-      "Good lighting without shadows"
+      "Search for your wallet or card holder",
+      "Check your bag, pocket, or desk",
+      "Place it flat and centered",
+      "Show it closed for security"
     ]
   }
 ];
@@ -237,27 +237,36 @@ export default function PhotoVerification() {
         <main className="mobile-container py-6 pb-24">
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-4">
-              <Camera className="text-white text-2xl" size={32} />
+              <span className="text-white text-2xl">🏢</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Photo Verification</h1>
-            <p className="text-brand-gray">We'll guide you through taking photos of specific objects for verification.</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Office Scavenger Hunt</h1>
+            <p className="text-brand-gray">Welcome to the Gauntlet HQ treasure hunt! Solve riddles and find special office items.</p>
           </div>
 
-          <Card className="mb-6">
+          <Card className="mb-6 bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200">
             <CardContent className="pt-6">
-              <h3 className="font-semibold text-gray-900 mb-3">What you'll need:</h3>
+              <h3 className="font-semibold text-gray-900 mb-3">🎯 Your Mission:</h3>
+              <div className="bg-white rounded-lg p-4 mb-4 border-l-4 border-purple-500">
+                <p className="text-sm text-gray-700 italic">
+                  "Agent, you've been selected for a special mission at Gauntlet HQ. Hidden throughout the office are four legendary items of power. Each holds a secret that will unlock the next level of your journey. Use your wit to solve the riddles and your camera to capture proof of your discoveries."
+                </p>
+              </div>
               <ul className="space-y-2 text-sm text-brand-gray">
                 <li className="flex items-center">
-                  <CheckCircle className="text-brand-green mr-3" size={16} />
-                  Camera access on your device
+                  <span className="text-purple-500 mr-3">🔍</span>
+                  Sharp detective skills to solve riddles
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="text-brand-green mr-3" size={16} />
-                  Good lighting for clear photos
+                  <span className="text-purple-500 mr-3">📱</span>
+                  Camera access to capture evidence
                 </li>
                 <li className="flex items-center">
-                  <CheckCircle className="text-brand-green mr-3" size={16} />
-                  The objects we'll ask you to photograph
+                  <span className="text-purple-500 mr-3">💡</span>
+                  Creative thinking for hidden clues
+                </li>
+                <li className="flex items-center">
+                  <span className="text-purple-500 mr-3">🏆</span>
+                  Determination to complete the quest
                 </li>
               </ul>
             </CardContent>
@@ -265,9 +274,9 @@ export default function PhotoVerification() {
 
           <Button 
             onClick={handleNextStep}
-            className="typeform-button typeform-button-primary"
+            className="typeform-button typeform-button-primary bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
           >
-            Get Started
+            🚀 Begin the Hunt
           </Button>
         </main>
       </div>
@@ -298,16 +307,16 @@ export default function PhotoVerification() {
           </div>
 
           {/* 2. Example Image Section */}
-          <Card>
+          <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
             <CardContent className="pt-6">
               <div className="flex items-center mb-3">
-                <Info className="text-brand-green mr-2" size={16} />
-                <h3 className="font-semibold text-gray-900">Photo Tips</h3>
+                <span className="text-amber-600 mr-2 text-lg">💡</span>
+                <h3 className="font-semibold text-gray-900">Detective Hints</h3>
               </div>
               <ul className="space-y-2">
                 {task.tips.map((tip, index) => (
                   <li key={index} className="flex items-start text-sm text-brand-gray">
-                    <span className="text-brand-green mr-2 mt-0.5">•</span>
+                    <span className="text-amber-600 mr-2 mt-0.5">🔸</span>
                     {tip}
                   </li>
                 ))}
@@ -317,7 +326,7 @@ export default function PhotoVerification() {
 
           {/* 3. Camera/Upload Interface */}
           <div className="bg-white rounded-xl p-4 border border-gray-200">
-            <h3 className="font-semibold text-gray-900 mb-4 text-center">Take or Upload Photo</h3>
+            <h3 className="font-semibold text-gray-900 mb-4 text-center">📸 Capture Your Evidence</h3>
             <CameraInterface 
               onPhotoCapture={handlePhotoCapture}
               isVerifying={verificationState === 'verifying'}
@@ -336,25 +345,25 @@ export default function PhotoVerification() {
 
           {/* 5. Verification Results */}
           {verificationState === 'success' && (
-            <div className="verification-success">
+            <div className="verification-success bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200">
               <div className="flex items-center">
-                <CheckCircle className="text-green-500 text-xl mr-3" />
+                <span className="text-green-500 text-xl mr-3">🎉</span>
                 <div>
-                  <p className="font-medium text-green-800">Photo verified successfully!</p>
-                  <p className="text-sm text-green-600">We detected the correct object in your photo.</p>
+                  <p className="font-medium text-green-800">Treasure Found!</p>
+                  <p className="text-sm text-green-600">Excellent detective work! You've discovered one of the Gauntlet HQ artifacts.</p>
                 </div>
               </div>
             </div>
           )}
 
           {verificationState === 'error' && (
-            <div className="verification-error">
+            <div className="verification-error bg-gradient-to-r from-red-50 to-pink-50 border border-red-200">
               <div className="flex items-center">
-                <AlertTriangle className="text-red-500 text-xl mr-3" />
+                <span className="text-red-500 text-xl mr-3">🕵️</span>
                 <div>
-                  <p className="font-medium text-red-800">Photo verification failed</p>
+                  <p className="font-medium text-red-800">The Mystery Continues...</p>
                   <p className="text-sm text-red-600">
-                    {verificationResult?.errorMessage || `We couldn't detect a ${task.expectedObject} in your photo. Please try again.`}
+                    {verificationResult?.errorMessage || `The artifact remains hidden. Review the riddle and search again for the ${task.expectedObject}.`}
                   </p>
                 </div>
               </div>
@@ -415,12 +424,12 @@ export default function PhotoVerification() {
           <div className="w-20 h-20 bg-brand-green rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="text-white text-3xl" size={48} />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-3">All photos captured!</h2>
-          <p className="text-brand-gray mb-8">Thank you for completing the photo verification process.</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">🏆 Mission Accomplished!</h2>
+          <p className="text-brand-gray mb-8">Congratulations, Agent! You've successfully completed the Gauntlet HQ scavenger hunt and discovered all the legendary artifacts.</p>
           
-          <Card className="mb-6">
+          <Card className="mb-6 bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-200">
             <CardContent className="pt-6">
-              <h3 className="font-semibold text-gray-900 mb-4">Photos captured:</h3>
+              <h3 className="font-semibold text-gray-900 mb-4">🗂️ Your Discovered Artifacts:</h3>
               <div className="grid grid-cols-2 gap-3">
                 {capturedPhotos.map((photo, index) => (
                   <div key={index} className="bg-gray-100 rounded-lg p-3 text-center">
@@ -444,9 +453,9 @@ export default function PhotoVerification() {
 
           <Button 
             onClick={handleRestart}
-            className="typeform-button typeform-button-primary"
+            className="typeform-button typeform-button-primary bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
           >
-            Start Over
+            🔄 New Adventure
           </Button>
         </div>
       </main>
