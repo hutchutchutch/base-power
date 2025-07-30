@@ -133,6 +133,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ========== DEMO PHOTO VERIFICATION ROUTES ==========
+  
+  // Create demo session for photo verification demo
+  app.post("/api/sessions", async (req, res) => {
+    try {
+      const sessionId = crypto.randomUUID();
+      // For demo purposes, just return a session ID
+      res.json({
+        id: sessionId,
+        currentStep: 0,
+        completedSteps: []
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create demo session", error: (error as Error).message });
+    }
+  });
+
   // ========== USER SURVEY ROUTES ==========
 
   // Get survey by invitation token

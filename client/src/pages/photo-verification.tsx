@@ -281,8 +281,11 @@ export default function PhotoVerification() {
           </Card>
         </main>
         
-        {/* Fixed bottom CTA */}
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50">
+        {/* Fixed bottom CTA - Debug visible */}
+        <div 
+          className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4" 
+          style={{ zIndex: 9999 }}
+        >
           <Button 
             onClick={handleNextStep}
             className="w-full bg-brand-green text-white hover:bg-green-700 py-4 text-lg font-medium rounded-xl"
