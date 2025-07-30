@@ -35,9 +35,13 @@ export default function ProgressHeader({
             )}
             <button 
               onClick={() => setLocation('/admin')}
-              className="bg-gray-200 hover:bg-gray-300 transition-colors rounded-lg px-3 py-1.5 cursor-pointer"
+              className="hover:bg-gray-100 transition-colors rounded-lg p-1.5 cursor-pointer"
             >
-              <span className="text-gray-600 font-medium text-sm">BASE</span>
+              <img 
+                src="/src/gauntlet.png" 
+                alt="Gauntlet Logo" 
+                className="w-8 h-8 object-contain"
+              />
             </button>
           </div>
           <div className="text-sm text-brand-gray">
