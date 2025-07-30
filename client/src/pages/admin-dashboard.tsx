@@ -215,24 +215,14 @@ export default function AdminDashboard({ admin, onLogout }: AdminDashboardProps)
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-lg">Your Surveys</CardTitle>
-                <div className="flex gap-2">
-                  <Button
-                    size="sm"
-                    onClick={() => setLocation("/admin/create-survey")}
-                    className="bg-brand-green text-white"
-                  >
-                    <Plus size={16} className="mr-1" />
-                    Create Survey
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => setShowCreateSurvey(true)}
-                  >
-                    <Plus size={16} className="mr-1" />
-                    Quick Add
-                  </Button>
-                </div>
+                <Button
+                  size="sm"
+                  onClick={() => setLocation("/admin/create-survey")}
+                  className="bg-brand-green text-white"
+                >
+                  <Plus size={16} className="mr-1" />
+                  Create Survey
+                </Button>
               </CardHeader>
               <CardContent className="space-y-2">
                 {surveysLoading ? (
@@ -508,6 +498,15 @@ export default function AdminDashboard({ admin, onLogout }: AdminDashboardProps)
           </Card>
         </div>
       )}
+
+      {/* Floating Action Button for Quick Add */}
+      <Button
+        onClick={() => setShowCreateSurvey(true)}
+        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-brand-green text-white shadow-lg hover:shadow-xl transition-all duration-200 z-50"
+        size="icon"
+      >
+        <Plus size={24} />
+      </Button>
     </div>
   );
 }
