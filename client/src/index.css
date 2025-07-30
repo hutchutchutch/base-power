@@ -68,6 +68,14 @@
   @apply max-w-md mx-auto px-4;
 }
 
+/* Fixed CTA styling for mobile */
+.fixed-cta {
+  /* Safe area padding for modern mobile devices */
+  padding-bottom: env(safe-area-inset-bottom, 1rem);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
 .step-transition {
   @apply transition-all duration-300 ease-in-out;
 }
