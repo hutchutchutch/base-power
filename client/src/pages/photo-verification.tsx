@@ -286,25 +286,20 @@ export default function PhotoVerification() {
             <p className="text-brand-gray">{task.description}</p>
           </div>
 
-          {/* 2. Example Image Section */}
+          {/* Detective Hints */}
           <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
             <CardContent className="pt-6">
               <div className="flex items-center mb-3">
                 <span className="text-amber-600 mr-2 text-lg">💡</span>
-                <h3 className="font-semibold text-gray-900">Detective Hints</h3>
+                <h3 className="font-semibold text-gray-900">Detective Hint</h3>
               </div>
-              <ul className="space-y-2">
-                {task.tips.map((tip, index) => (
-                  <li key={index} className="flex items-start text-sm text-brand-gray">
-                    <span className="text-amber-600 mr-2 mt-0.5">🔸</span>
-                    {tip}
-                  </li>
-                ))}
-              </ul>
+              <p className="text-sm text-brand-gray italic">
+                {task.tips[0]}
+              </p>
             </CardContent>
           </Card>
 
-          {/* 3. Camera/Upload Interface */}
+          {/* Camera/Upload Interface */}
           <div className="bg-white rounded-xl p-4 border border-gray-200">
             <h3 className="font-semibold text-gray-900 mb-4 text-center">📸 Capture Your Evidence</h3>
             <CameraInterface 
